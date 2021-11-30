@@ -1,0 +1,2 @@
+export const LOGGED_IN_USER_REQUEST = "LOGGED_IN_USER_REQUEST";
+export const LOGGED_OUT = "LOGGED_OUT";

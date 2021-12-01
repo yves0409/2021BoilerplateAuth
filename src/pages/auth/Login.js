@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-//import { auth } from "../../firebase";
-//import { toast } from "react-toastify";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { auth, googleAuthProvider } from "../../firebase";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -78,7 +77,7 @@ const Login = ({ history }) => {
       <Button
         onClick={handleSubmit}
         type="submit"
-        classname="mb-3"
+        className="mb-3"
         shape="round"
         block
         icon={<MailOutlined />}
@@ -99,13 +98,17 @@ const Login = ({ history }) => {
           <Button
             onClick={googleLogin}
             type="danger"
-            classname="mb-3"
+            className="mb-3"
             shape="round"
             block
             icon={<GoogleOutlined />}
           >
-            Login with email/password
+            Login with Google
           </Button>
+
+          <Link to="/forgot/password" className="float-right text-danger mt-2">
+            Forgot Password
+          </Link>
         </div>
       </div>
     </div>

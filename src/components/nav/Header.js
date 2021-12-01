@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import firebase from "firebase/compat/app";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 const { SubMenu, Item } = Menu;
@@ -17,6 +17,10 @@ const { SubMenu, Item } = Menu;
 const Header = () => {
   const [current, setCurrent] = useState("home");
   let dispatch = useDispatch();
+
+  const { user } = useSelector((state) => ({ ...state }));
+
+  console.log(user);
   let history = useHistory();
 
   const handleClick = (e) => {
@@ -38,21 +42,29 @@ const Header = () => {
         <Link to="/">Home</Link>
       </Item>
 
-      <Item key="register" icon={<UserAddOutlined />} className="float-right">
-        <Link to="/register">Register</Link>
-      </Item>
-
-      <Item key="login" icon={<LoginOutlined />} className="float-right">
-        <Link to="/login">Login</Link>
-      </Item>
-
-      <SubMenu icon={<SettingOutlined />} title="Username">
-        <Item key="setting1">Option 1</Item>
-        <Item key="setting:2">Option 2</Item>
-        <Item icon={<LogoutOutlined />} onClick={logout}>
-          Logout
+      {!user && (
+        <Item key="register" icon={<UserAddOutlined />} className="float-right">
+          <Link to="/register">Register</Link>
         </Item>
-      </SubMenu>
+      )}
+
+      {!user && (
+        <Item key="login" icon={<LoginOutlined />} className="float-right">
+          <Link to="/login" className="float-right">
+            Login
+          </Link>
+        </Item>
+      )}
+
+      {user && (
+        <SubMenu icon={<SettingOutlined />} title="Username">
+          <Item key="setting:1">Option 1</Item>
+          <Item key="setting:2">Option 2</Item>
+          <Item icon={<LogoutOutlined />} onClick={logout}>
+            Logout
+          </Item>
+        </SubMenu>
+      )}
     </Menu>
   );
 };

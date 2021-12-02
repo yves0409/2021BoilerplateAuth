@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const cors = require("express");
+const cors = require("cors");
+const { readdirSync } = require("fs");
 require("dotenv").config();
 
 //APP
@@ -23,12 +24,9 @@ app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
-//ROUTES
-app.get("/api", (req, res) => {
-  res.json({
-    data: "you hit the node API",
-  });
-});
+//ROUTES MIDDLEWARE
+
+readdirSync("./routes").map((r) => app.use("/api", require("./routes/" + r)));
 
 //PORT
 const port = process.env.PORT || 80000;
